@@ -8,7 +8,8 @@ from django.db.models.fields.files import ImageFieldFile
 from PIL import Image
 from django.core.files.base import ContentFile
 import cStringIO
-
+# Add introspection rules for South > 0.7 
+from south.modelsinspector import add_introspection_rules
 
 def generate_thumb(img, thumb_size, format):
     """
@@ -175,3 +176,19 @@ class ImageWithThumbsField(ImageField):
         self.height_field = height_field
         self.sizes = sizes
         super(ImageField, self).__init__(**kwargs)
+
+#Add the South Introspection rules for the ImageWithThumbsField
+add_introspection_rules(
+	[(
+		(ImageWithThumbsField,),
+		[],
+		{
+			"verbose_name": ["verbose_name", {"default": None}],
+			"name": ["name", {"default": None}],
+			"width_field": ["width_field", {"default": None}],
+			"height_field": ["height_field", {"default": None}],
+			"sizes": ["sizes", {"default": (120,120)}],
+		}
+	)],
+	["thumbs\.ImageWithThumbsField"]
+)
