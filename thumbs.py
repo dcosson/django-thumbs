@@ -170,3 +170,19 @@ class ImageWithThumbsField(ImageField):
         self.height_field=height_field
         self.sizes = sizes
         super(ImageField, self).__init__(**kwargs)
+		
+#Add the South Introspection rules for the ImageWithThumbsField
+add_introspection_rules(
+	[(
+		(ImageWithThumbsField,),
+		[],
+		{
+			"verbose_name": ["verbose_name", {"default": None}],
+			"name": ["name", {"default": None}],
+			"width_field": ["width_field", {"default": None}],
+			"height_field": ["height_field", {"default": None}],
+			"sizes": ["sizes", {"default": (120,120)}],
+		}
+	)],
+	["thumbs\.ImageWithThumbsField"]
+)
