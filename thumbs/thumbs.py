@@ -12,9 +12,9 @@ from django.conf import settings
 import cStringIO
 #South introspection rules to deal with thumbs:
 from south.modelsinspector import add_introspection_rules
-add_introspection_rules([], [__name__ + r'.ImageWithThumbsField'])
+#add_introspection_rules([], [__name__ + r'.ImageWithThumbsField'])
 
-
+VERSION = 0.2
 
 def generate_thumb(img, thumb_size, format):
     """
@@ -82,7 +82,7 @@ def generate_resized(img, max_dimensions, format):
     The point of this is to shrink the image that you use as the full-sized version of the picture. If
     your site takes user-uploaded photos, users will upload huge pictures without thinking about it. 
     No reason to waste bandwidth and increase page-load times by displaying with these original images
-    directy.  The original is still saved, so you can always regenerate your resized and thumbnailed 
+    directly.  The original is still saved, so you can always regenerate your resized and thumbnailed 
     versions later.
     """
     img.seek(0) # see http://code.djangoproject.com/ticket/8222 for details
@@ -154,7 +154,7 @@ class ImageWithThumbsFieldFile(ImageFieldFile):
                     thumb_url = '%s.%sx%s.full.%s' % (split[0],w,h,split[1])
                     return thumb_url
 
-            setattr(self, 'url_full' % get_fullsize(self, self.fullsize)) 
+            setattr(self, 'url_full', get_fullsize(self, self.fullsize)) 
     
     def get_image_url(self, size_name="full"):
         """ Wrapper to get different sized thumbs by a name (not tied to exact size) """
@@ -170,8 +170,8 @@ class ImageWithThumbsFieldFile(ImageFieldFile):
             url = self.url
             
         elif self.fullsize and (size_name == "full" or size_name == "fullsize"):
-            (w,h) = self.fullsize
-            url = getattr(self, 'url_%sx%s_full' % (w,h))
+            #(w,h) = self.fullsize #fullsize attribute doesn't have size
+            url = getattr(self, 'url_full')
 
         if self.sizes and self.size_names and size_name in self.size_names:
             (w,h) = self.sizes[ self.size_names.index(size_name) ]
@@ -327,7 +327,10 @@ add_introspection_rules(
 			"name": ["name", {"default": None}],
 			"width_field": ["width_field", {"default": None}],
 			"height_field": ["height_field", {"default": None}],
-			"sizes": ["sizes", {"default": (120,120)}],
+			"sizes": ["sizes", {"default": None}],
+            "size_names": ["size_names", {"default": None}],
+            "fullsize": ["fullsize", {"default": None}],
+            "default_image": ["default_image", {"default": ""}],
 		}
 	)],
 	["thumbs\.ImageWithThumbsField"]
