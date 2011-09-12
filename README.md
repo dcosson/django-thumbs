@@ -1,17 +1,17 @@
 django-thumbs
 9/5/2011
 
-### Significant additions in v0.2, makes django-thumbs easier to use but maintains full backward-compatibility
+##Significant additions in v0.2, makes django-thumbs easier to use and maintains full backward-compatibility
 
-This is a fork of "github.com/Level-Up/django-thumbs.git".  See README_ORIGINAL for the original README file.
+This is a fork of [github.com/Level-Up/django-thumbs.git](http://github.com/Level-Up/django-thumbs.git).  See README_ORIGINAL for the original readme file. I've tested on Django 1.2 and 1.3, but feel free to try it on 1.0+
 
-### Features
+###Features
 + Easy to integrate into your code - just an ImageField with a few extra (optional) arguments to control thumbnailing
 + Works perfectly with any StorageBackend
 + Generates thumbnails after image is uploaded into memory
 + Deletes thumbnails when the image file is deleted
 
-### New in forked version
+###Added in forked version
 + Simpler (more loosely coupled) access to the various thumbnail sizes - give each size a name and access its url by name (i.e. `obj.picture.get_image_url("tiny")` instead of `obj.picture.url_80x80`).
 + Specify a default url (as an argument to the model field or in `settings.DEFAULT_IMAGE_URL`) to be used if no field is empty
 + Option to specify a "fullsize" image that maintains original aspect ratio but is scaled down to some maximum width or height. 
@@ -19,17 +19,18 @@ This is a fork of "github.com/Level-Up/django-thumbs.git".  See README_ORIGINAL 
 + Packaged as a python module (install with setup.py or pip, put in requirements.txt file, etc.)
 + South introspection rules (so south >= 0.7 doesn't complain about migrating)
 
-### Optional shortcuts:
+###Optional shortcuts
 + wrappers around `forms.Form` and `forms.ModelForm` classes so calling `form.save()` on a bound form will look through request.FILES and save the images/files.
 + template tags for displaying your images
 
-### Installation and setup
-git clone and run `./setup.py install` or install with `pip git+git://github.com/dcosson/django-thumbs` 
+###Installation and setup
 
-add `DEFAULT_IMAGE_URL` to settings if you'd like - if the image is blank, it will display this
-add "thumbs"  to `INSTALLED_APPS` to use the image and image_url template tags 
+1. git clone and run `./setup.py install` or install with `pip git+git://github.com/dcosson/django-thumbs` 
+2. add `DEFAULT_IMAGE_URL` to settings (optional) as the url to be used if ImageField is blank
+3. add "thumbs"  to `INSTALLED_APPS` (optional) to use the image and image_url template tags 
 
 ###License
+
 [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
 
 ### Examples:

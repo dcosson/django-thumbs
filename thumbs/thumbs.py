@@ -12,7 +12,7 @@ from django.conf import settings
 import cStringIO
 #South introspection rules to deal with thumbs:
 from south.modelsinspector import add_introspection_rules
-#add_introspection_rules([], [__name__ + r'.ImageWithThumbsField'])
+add_introspection_rules([], [__name__ + r'.ImageWithThumbsField'])
 
 VERSION = 0.2
 
